@@ -289,6 +289,20 @@ void CCoordinateMappingBasics::Update()
 
 	if (SUCCEEDED(hr))
 	{
+		IBodyFrameReference* pBodyFrameReference = NULL;
+
+		hr = pMultiSourceFrame->get_BodyFrameReference(&pBodyFrameReference);
+
+		if (SUCCEEDED(hr))
+		{
+			hr = pBodyFrameReference->AcquireFrame(&pBodyFrame);
+		}
+
+		SafeRelease(pBodyFrameReference);
+	}
+
+	if (SUCCEEDED(hr))
+	{
 		INT64 nDepthTime = 0;
 		IFrameDescription* pDepthFrameDescription = NULL;
 		int nDepthWidth = 0;
@@ -302,6 +316,8 @@ void CCoordinateMappingBasics::Update()
 		ColorImageFormat imageFormat = ColorImageFormat_None;
 		UINT nColorBufferSize = 0;
 		RGBQUAD *pColorBuffer = NULL;
+
+		IBody* ppBodies[BODY_COUNT] = {0};
 
 		// get depth frame data
 
@@ -367,12 +383,18 @@ void CCoordinateMappingBasics::Update()
 			}
 		}
 
+		if (SUCCEEDED(hr))
+		{
+			hr = pBodyFrame->GetAndRefreshBodyData(_countof(ppBodies), ppBodies);
+		}
+
 		// process data
 
 		if (SUCCEEDED(hr))
 		{
 			ProcessFrame(nDepthTime, pDepthBuffer, nDepthWidth, nDepthHeight, 
-				pColorBuffer, nColorWidth, nColorHeight);
+				pColorBuffer, nColorWidth, nColorHeight,
+				ppBodies);
 		}
 
 		SafeRelease(pDepthFrameDescription);
@@ -381,6 +403,7 @@ void CCoordinateMappingBasics::Update()
 
 	SafeRelease(pDepthFrame);
 	SafeRelease(pColorFrame);
+	SafeRelease(pBodyFrame);
 	SafeRelease(pMultiSourceFrame);
 }
 
@@ -531,7 +554,9 @@ HRESULT CCoordinateMappingBasics::InitializeDefaultSensor()
 /// </summary>
 void CCoordinateMappingBasics::ProcessFrame(INT64 nTime, 
 											const UINT16* pDepthBuffer, int nDepthWidth, int nDepthHeight, 
-											const RGBQUAD* pColorBuffer, int nColorWidth, int nColorHeight)
+											const RGBQUAD* pColorBuffer, int nColorWidth, int nColorHeight,
+											//const BYTE* pBodyIndexBuffer, int nBodyIndexWidth, int nBodyIndexHeight)
+											IBody** ppBodies)
 {
 	if (m_hWnd)
 	{
@@ -568,7 +593,9 @@ void CCoordinateMappingBasics::ProcessFrame(INT64 nTime,
 	// Make sure we've received valid data
 	if (m_pCoordinateMapper && m_pDepthCoordinates && m_pOutputRGBX && 
 		pDepthBuffer && (nDepthWidth == cDepthWidth) && (nDepthHeight == cDepthHeight) && 
-		pColorBuffer && (nColorWidth == cColorWidth) && (nColorHeight == cColorHeight))
+		pColorBuffer && (nColorWidth == cColorWidth) && (nColorHeight == cColorHeight) &&
+		//BodyIndexBuffer && (nBodyIndexWidth == cDepthWidth) && (nBodyIndexHeight == cDepthHeight))
+		ppBodies != NULL)
 	{
 		HRESULT hr1 = m_pCoordinateMapper->MapDepthFrameToColorSpace(nDepthWidth * nDepthHeight, (UINT16*)pDepthBuffer, nDepthWidth * nDepthHeight, m_pColorCoordiantes);
 
@@ -610,7 +637,7 @@ void CCoordinateMappingBasics::ProcessFrame(INT64 nTime,
 				}
 
 				std::stringstream rawDepthImageFilename;
-				rawDepthImageFilename << "./data/raw_depth_" << 
+				rawDepthImageFilename << "./data/raw_depth_" <<
 					std::setfill('0') << std::setw(5) << m_nFrameSaverCounter << '_' <<
 					std::setfill('0') << std::setw(12) << nTime << ".png";
 				cvSaveImage(rawDepthImageFilename.str().c_str(), cvDepthImage);
@@ -623,6 +650,108 @@ void CCoordinateMappingBasics::ProcessFrame(INT64 nTime,
 
 				cvReleaseImage(&cvDepthImage);
 				cvReleaseImage(&rgbdMapper);
+			}
+
+			// Show and Save Skeleton Data
+			{
+				HRESULT hr = EnsureDirect2DResources();
+
+				if (SUCCEEDED(hr) && m_pRenderTarget && m_pCoordinateMapper)
+				{
+					m_pRenderTarget->BeginDraw();
+					m_pRenderTarget->Clear();
+
+					RECT rct;
+					GetClientRect(GetDlgItem(m_hWnd, IDC_VIDEOVIEW), &rct);
+					int width = rct.right;
+					int height = rct.bottom;
+
+					for (int i = 0; i < BODY_COUNT; ++i)
+					{
+						IBody* pBody = ppBodies[i];
+						if (pBody)
+						{
+							BOOLEAN bTracked = false;
+							hr = pBody->get_IsTracked(&bTracked);
+
+							if (SUCCEEDED(hr) && bTracked)
+							{
+								Joint joints[JointType_Count]; 
+								D2D1_POINT_2F jointPoints[JointType_Count];
+								HandState leftHandState = HandState_Unknown;
+								HandState rightHandState = HandState_Unknown;
+
+								JointOrientation jointOrientation[JointType_Count];
+
+								pBody->get_HandLeftState(&leftHandState);
+								pBody->get_HandRightState(&rightHandState);
+
+								hr = pBody->GetJoints(_countof(joints), joints);
+								HRESULT hr2 = pBody->GetJointOrientations(_countof(jointOrientation), jointOrientation);
+								if (SUCCEEDED(hr) && SUCCEEDED(hr2))
+								{
+									std::stringstream skeletonFileName;
+									skeletonFileName << "./data/skeleton_" <<
+										std::setfill('0') << std::setw(5) << m_nFrameSaverCounter << '_' <<
+										std::setfill('0') << std::setw(2) << i << '_' <<
+										std::setfill('0') << std::setw(12) << nTime << ".txt";
+
+									std::ofstream skeletonOutputFile(skeletonFileName.str());
+									std::stringstream skeletonOutputData;
+
+									SYSTEMTIME t;
+									GetSystemTime(&t);
+									skeletonOutputData << ((t.wHour * 60 + t.wMinute) * 60 + t.wSecond) * 1000 + t.wMilliseconds << '\n';
+
+									for (int j = 0; j < _countof(joints); ++j)
+									{
+										jointPoints[j] = BodyToScreen(joints[j].Position, width, height);
+
+										DepthSpacePoint depthPoint = {0};
+										m_pCoordinateMapper->MapCameraPointToDepthSpace(joints[j].Position, &depthPoint);
+
+										skeletonOutputData << j << " "
+											<< joints[j].Position.X << " " 
+											<< joints[j].Position.Y << " "
+											<< joints[j].Position.Z << " "
+											<< joints[j].TrackingState << " "
+											<< jointPoints[j].x << " "
+											<< jointPoints[j].y << " "
+											<< depthPoint.X << " "
+											<< depthPoint.Y << std::endl;
+									}
+									DrawBody(joints, jointPoints);
+
+									skeletonOutputData << leftHandState << std::endl
+										<< rightHandState << std::endl;
+									DrawHand(leftHandState, jointPoints[JointType_HandLeft]);
+									DrawHand(rightHandState, jointPoints[JointType_HandRight]);
+
+									for (int j = 0; j < _countof(jointOrientation); j++)
+									{
+										skeletonOutputData << jointOrientation[j].Orientation.w << " "
+											<< jointOrientation[j].Orientation.x << " "
+											<< jointOrientation[j].Orientation.y << " "
+											<< jointOrientation[j].Orientation.z << std::endl;
+									}
+
+									skeletonOutputFile << skeletonOutputData.str();
+									skeletonOutputFile.close();
+								}
+							}
+						}
+					}
+
+					hr = m_pRenderTarget->EndDraw();
+
+					// Device lost, need to recreate the render target
+					// We'll dispose it now and retry drawing
+					if (D2DERR_RECREATE_TARGET == hr)
+					{
+						hr = S_OK;
+						DiscardDirect2DResources();
+					}
+				}
 			}
 
 			// Update frame saver counter
