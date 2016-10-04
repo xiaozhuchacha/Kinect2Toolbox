@@ -53,3 +53,15 @@ Open Kinect Studio, and switch to **Record** tab. Click on **Connect** button, a
 ![alt text](https://xiaozhuchacha.github.io/projects/cvpr15_tool/toolbox_images/Record.png "Recording GUI setup")
 
 Kinect v2 consumes lots of memory. If you need to record long clips, remember to edit the buffer size before recording. Also, in order to achieve high frame rate when dumping the data into hard drive, it is recommended to have more than 16GB memory for Kinect Studio.
+
+![alt text](https://xiaozhuchacha.github.io/projects/cvpr15_tool/toolbox_images/Buffer.png "Set Kinect Studio buffer for better performance")
+
+## Recorders
+
+In this section, NO Kinect v2 needed to physically connect to PC. Following instructions assume no connection.
+
+* Load the recorded Kinect data (.xef file) that you want to dump using Kinect Studio.
+* In PLAY tab, click Connected button.
+* Check all 11 streams.
+
+![alt text](https://xiaozhuchacha.github.io/projects/cvpr15_tool/toolbox_images/CheckAll.png "Play settings")
