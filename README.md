@@ -41,3 +41,15 @@ The toolbox includes two types of code: **Recorders** and **Converters**. **Reco
 * RGBDAlign: align RGB images to the depth images
 * Depth2PC: convert raw depth images to point cloud .ply files (no color)
 * ColorDepth2PC: convert aligned RGB-D images to point cloud .ply files
+
+**We recommend to use the binary files located inside Pipeline forder if you do not need to change anything in the source code.**
+
+## Record Kinect Raw Data with Kinect Studio
+
+You will need Kinect v2 to physically connect to your PC. Please refer to [this page](https://msdn.microsoft.com/en-us/library/Dn782036.aspx) to check whether your machine is compatible with Kinect v2. The most important component is a USB 3.0 port.
+
+Open Kinect Studio, and switch to **Record** tab. Click on **Connect** button, and check all **11 streams**. Once you finish recording, a .xef file will be generated.
+
+![alt text](https://xiaozhuchacha.github.io/projects/cvpr15_tool/toolbox_images/Record.png "Recording GUI setup")
+
+Kinect v2 consumes lots of memory. If you need to record long clips, remember to edit the buffer size before recording. Also, in order to achieve high frame rate when dumping the data into hard drive, it is recommended to have more than 16GB memory for Kinect Studio.
