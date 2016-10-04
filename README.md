@@ -15,18 +15,18 @@ Bibtex:
 }
 ```
 
-### Kinect v2 Toolbox Manual
-#### Author: Yixin Zhu (yixin.zhu@ucla.edu), Tianmin Shu (tianmin.shu@ucla.edu)
+# Kinect v2 Toolbox Manual
+### Author: Yixin Zhu (yixin.zhu@ucla.edu), Tianmin Shu (tianmin.shu@ucla.edu)
 
 Last revised: October 2016
 
-#### Prerequisite
+## Prerequisite
 * Kinect SDK [Download Link](http://www.microsoft.com/en-us/download/details.aspx?id=44561).
 * Windows 8.1/10.
 * Visual Studio 2012 installed or Runtime Libraries installed.
 * MATLAB R2014b or newer version for visualization (optional).
 
-#### Usage
+## Usage
 
 The toolbox includes two types of code: **Recorders** and **Converters**. **Recorders** dump the Kinect raw data into RGB images, depth images and skeleton data. **Converters** post-process the data collected by Recorders.
 
