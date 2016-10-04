@@ -65,3 +65,12 @@ In this section, NO Kinect v2 needed to physically connect to PC. Following inst
 * Check all 11 streams.
 
 ![alt text](https://xiaozhuchacha.github.io/projects/cvpr15_tool/toolbox_images/CheckAll.png "Play settings")
+
+* Hit Play button, and you should be able to see the replayed videos. You can change the stream (RGB, depth, skeleton, etc) in two viewers by clicking on the gear-shape buttons.
+
+![alt text](https://xiaozhuchacha.github.io/projects/cvpr15_tool/toolbox_images/PlayStart.png "Play recorded data")
+
+* Hit Pause button at the beginning of the data that you want to dump.
+* Open any **Recorder** mentioned in previous section. You should see a **stilled** skeleton in a pop-up windows. In this manual, we will use **ColorDepthSkeletonRecorder** as the example, since it is the most comprehensive **Recorder** that records RGB, depth and skeleton data simultaneously.
+
+![alt text](https://xiaozhuchacha.github.io/projects/cvpr15_tool/toolbox_images/OpenRecorder.png "Start Recorder")
