@@ -37,7 +37,7 @@ The toolbox includes two types of code: **Recorders** and **Converters**. **Reco
 * SkeletonRecorder: dump skeleton data to hard drive
 * ColorDepthSkeletonRecorder: dump RGB, depth and skeleton simultaneously to hard drive. Two versions are provided. The *Mask* version marks the skeleton area in the depth image.
 
-**Converters** need to run in the following orders, including
+**Converters** include
 * RGBDAlign: align RGB images to the depth images
 * Depth2PC: convert raw depth images to point cloud .ply files (no color)
 * ColorDepth2PC: convert aligned RGB-D images to point cloud .ply files
