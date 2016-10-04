@@ -83,8 +83,9 @@ In this section, NO Kinect v2 needed to physically connect to PC. Following inst
 All the **converters** load the data from **data** folder, and write the new data into the same **data** folder.
 
 The inputs and outputs of **converters** are defined as
+
 Converters | Inputs | Outputs | Physically plugin Kinect?
 -----------|--------|---------|--------------------------
-RGBDAlign | depth2rgb_mapper | raw_depth, raw\_rgb | aligned_rgb | No
+RGBDAlign | depth2rgb_mapper | raw_depth, raw_rgb | aligned_rgb | No
 Depth2PC | raw_depth | point cloud file (.ply) | No
 ColorDepth2PC | aligned_rgb, raw_depth | point cloud file (.ply)  Yes
