@@ -1,16 +1,16 @@
 # Kinect2 Toolbox
 
 ### Code for CVPR 2015 Paper
-### Understanding Tools: Task-Oriented Object Modeling, Learning and Recognition 
+### Understanding Tools: Task-Oriented Object Modeling, Learning and Recognition
 
 Project website: https://xiaozhuchacha.github.io/projects/cvpr15_tool/
 
 Bibtex:
 ```bash
-@InProceedings{zhu2015tool, 
-    title={Understanding Tools: Task-Oriented Object Modeling, Learning and Recognition}, 
-    author={Zhu, Yixin and Zhao, Yibiao and Zhu, Song-Chun}, 
-    booktitle={IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, 
+@InProceedings{zhu2015tool,
+    title={Understanding Tools: Task-Oriented Object Modeling, Learning and Recognition},
+    author={Zhu, Yixin and Zhao, Yibiao and Zhu, Song-Chun},
+    booktitle={IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
     year={2015}
 }
 ```
@@ -23,7 +23,7 @@ Last revised: October 2016
 ## Prerequisite
 * Kinect SDK [Download Link](http://www.microsoft.com/en-us/download/details.aspx?id=44561).
 * Windows 8.1/10.
-* Visual Studio 2012 installed or Runtime Libraries installed.
+* Visual Studio 2015 installed or Runtime Libraries installed.
 * MATLAB R2014b or newer version for visualization (optional).
 
 ## Usage
