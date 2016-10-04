@@ -88,4 +88,13 @@ Converters | Inputs | Outputs | Physically plugin Kinect?
 -----------|--------|---------|--------------------------
 RGBDAlign | depth2rgb_mapper | raw_depth, raw_rgb | aligned_rgb | No
 Depth2PC | raw_depth | point cloud file (.ply) | No
-ColorDepth2PC | aligned_rgb, raw_depth | point cloud file (.ply)  Yes
+ColorDepth2PC | aligned_rgb, raw_depth | point cloud file (.ply) | Yes
+
+## MATLAB Visualization (optional)
+
+This part of toolbox is designed for visualization only. You can visualize the data easily in other programming languages, e.g. Python, C++, etc.
+
+* Copy all the files from previous **data** folder into the subfolder **data** located in the folder **matlab\_viz**.
+* Run **viz\_result.m**. It should show point cloud with human skeleton. The function **showPointCloud** is only supported in MATLAB 2014b or newer version, but can be easily replaced by function **plot3** in older versions.
+
+![alt text](https://xiaozhuchacha.github.io/projects/cvpr15_tool/toolbox_images/MatlabViz.png "MATLAB visualization")
