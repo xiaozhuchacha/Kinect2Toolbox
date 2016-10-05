@@ -86,8 +86,8 @@ The inputs and outputs of **converters** are defined as
 
 Converters | Inputs | Outputs | Physically plugin Kinect?
 -----------|--------|---------|--------------------------
-RGBDAlign | depth2rgb_mapper | raw_depth, raw_rgb | aligned_rgb | No
-Depth2PC | raw_depth | point cloud file (.ply) | No
+RGBDAlign | depth2rgb_mapper, raw_depth, raw_rgb | aligned_rgb | No
+Depth2PC | raw_depth | point cloud file (.ply) | Yes
 ColorDepth2PC | aligned_rgb, raw_depth | point cloud file (.ply) | Yes
 
 ## MATLAB Visualization (optional)
