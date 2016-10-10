@@ -15,9 +15,9 @@ Bibtex:
 }
 ```
 
-Contact: [Yixin Zhu](https://xiaozhuchacha.github.io) (yixin.zhu@ucla.edu)
-
 # Kinect v2 Toolbox Manual
+
+### Contact: [Yixin Zhu](https://xiaozhuchacha.github.io) (yixin.zhu@ucla.edu)
 
 Last revised: October 2016
 
@@ -97,6 +97,7 @@ Converters | Inputs | Outputs | Physically plugin Kinect?
 RGBDAlign | depth2rgb_mapper, raw_depth, raw_rgb | aligned_rgb | No
 Depth2PC | raw_depth | point cloud file (.ply) | Yes
 ColorDepth2PC | aligned_rgb, raw_depth | point cloud file (.ply) | Yes
+RGBDAlign2 | depth2rgb_mapper2, raw_depth, raw_rgb | aligned_depth | No
 
 ## MATLAB Visualization (optional)
 
