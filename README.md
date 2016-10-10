@@ -41,7 +41,7 @@ Set 1: Everything will be converted to depth space later.
 * ColorDepthSkeletonRecorder: dump RGB, depth and skeleton simultaneously to hard drive. Two versions are provided. The *Mask* version marks the skeleton area in the depth image. The mapper produced in this code will be used to *convert rgb to depth space.*.
 
 Set 2: Everything will be converted to color space later.
-* ColorDepthSkeletonRecorder: dump RGB, depth and skeleton simultaneously to hard drive. The mapper produced in this code will be used to *convert depth to rgb space.*.
+* ColorDepthSkeletonRecorder2: dump RGB, depth and skeleton simultaneously to hard drive. The mapper produced in this code will be used to *convert depth to rgb space.*.
 
 **Converters** include two sets:
 
