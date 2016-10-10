@@ -30,17 +30,24 @@ Last revised: October 2016
 
 The toolbox includes two types of code: **Recorders** and **Converters**. **Recorders** dump the Kinect raw data into RGB images, depth images and skeleton data. **Converters** post-process the data collected by Recorders.
 
-**Recorders** include
+**Recorders** include two sets:
+Set 1: Everything will be converted to depth space later.
 * ColorRecorder: dump raw RGB images to hard drive
 * DepthRecorder: dump raw depth images to hard drive
 * ColorDepthRecorder: dump both raw depth and RGB images to hard drive
 * SkeletonRecorder: dump skeleton data to hard drive
-* ColorDepthSkeletonRecorder: dump RGB, depth and skeleton simultaneously to hard drive. Two versions are provided. The *Mask* version marks the skeleton area in the depth image.
+* ColorDepthSkeletonRecorder: dump RGB, depth and skeleton simultaneously to hard drive. Two versions are provided. The *Mask* version marks the skeleton area in the depth image. The mapper produced in this code will be used to *convert rgb to depth space.*.
+Set 2: Everything will be converted to color space later.
+* ColorDepthSkeletonRecorder: dump RGB, depth and skeleton simultaneously to hard drive. The mapper produced in this code will be used to *convert depth to rgb space.*.
 
-**Converters** include
+**Converters** include two sets:
+Set 1: Everything will be converted to depth space later.
 * RGBDAlign: align RGB images to the depth images
 * Depth2PC: convert raw depth images to point cloud .ply files (no color)
 * ColorDepth2PC: convert aligned RGB-D images to point cloud .ply files
+Set 2: Everything will be converted to color space later.
+* RGBDAlign2: align depth images to the RGB images
+* ColorDepth2PC: TODO
 
 **We recommend to use the binary files located inside Pipeline forder if you do not need to change anything in the source code.**
 
