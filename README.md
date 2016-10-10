@@ -15,8 +15,9 @@ Bibtex:
 }
 ```
 
+Contact: [Yixin Zhu](https://xiaozhuchacha.github.io) (yixin.zhu@ucla.edu)
+
 # Kinect v2 Toolbox Manual
-### Author: Yixin Zhu (yixin.zhu@ucla.edu), Tianmin Shu (tianmin.shu@ucla.edu)
 
 Last revised: October 2016
 
