@@ -48,7 +48,6 @@ Set 1: Everything will be converted to depth space later.
 * ColorDepth2PC: convert aligned RGB-D images to point cloud .ply files
 Set 2: Everything will be converted to color space later.
 * RGBDAlign2: align depth images to the RGB images
-* ColorDepth2PC: TODO
 
 **We recommend to use the binary files located inside Pipeline forder if you do not need to change anything in the source code.**
 
@@ -94,8 +93,8 @@ The inputs and outputs of **converters** are defined as
 
 Converters | Inputs | Outputs | Physically plugin Kinect?
 -----------|--------|---------|--------------------------
-RGBDAlign | depth2rgb_mapper, raw_depth, raw_rgb | aligned_rgb | No
 Depth2PC | raw_depth | point cloud file (.ply) | Yes
+RGBDAlign | depth2rgb_mapper, raw_depth, raw_rgb | aligned_rgb | No
 ColorDepth2PC | aligned_rgb, raw_depth | point cloud file (.ply) | Yes
 RGBDAlign2 | depth2rgb_mapper2, raw_depth, raw_rgb | aligned_depth | No
 
