@@ -94,6 +94,8 @@ int main(void)
 			cv::Mat cvColorShowImage;
 			cv::resize(cvColorOriImage, cvColorShowImage, cv::Size(), 0.25, 0.25);
 			cv::imshow("Original Color Image", cvColorShowImage);
+
+			cvColorShowImage.release();
 		}
 
 		// load depth image
@@ -107,6 +109,8 @@ int main(void)
 			cv::Mat adjMap;
 			cv::convertScaleAbs(cvDepthDispImage, adjMap, 255 / 1000.0);
 			cv::imshow("Original Depth Image", adjMap);
+
+			cvDepthDispImage.release();
 		}
 
 		// load mapper file
@@ -136,6 +140,12 @@ int main(void)
 			colorImageFilename << "data/aligned_rgb_" << std::setfill('0') << std::setw(5) << i << ".png";
 			cv::imwrite(colorImageFilename.str().c_str(), cvColorMapperImage);
 		}
+
+		// release memory
+		cvColorOriImage.release();
+		cvColorMapperImage.release();
+		cvReleaseImage(&cvDepthImage);
+		cvReleaseImage(&cvMapperImage);
 
 		cv::waitKey(33);
 	}
