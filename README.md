@@ -3,7 +3,7 @@
 ### Code for CVPR 2015 Paper
 ### Understanding Tools: Task-Oriented Object Modeling, Learning and Recognition
 
-Project website: https://xiaozhuchacha.github.io/projects/cvpr15_tool/
+Project website: http://www.yzhu.io/projects/cvpr15_tool/
 
 Bibtex:
 ```bash
@@ -17,7 +17,7 @@ Bibtex:
 
 # Kinect v2 Toolbox Manual
 
-### Contact: [Yixin Zhu](https://xiaozhuchacha.github.io) (yixin.zhu@ucla.edu)
+### Contact: [Yixin Zhu](http://www.yzhu.io) (yixin.zhu@ucla.edu)
 
 Last revised: October 2016
 
